@@ -3,24 +3,21 @@ def notlessthan(p,q):
         return True
     return False
 
-def basedivision(p,q): #only p notlessthan q,return quotient and remainder
+def basedivision(p,q):
     count = 0
     if notlessthan(p,q):
         while(notlessthan(p,q)):
             p=p-q
             count+=1
+    else: 
+        return 0,p
     return count,p
 
 def division(p,q,n):
-    quotient = [0 for i in range(n+1)]
-    remainder = [0 for i in range(n+1)]
-    digit = []
-    for d in range(n+1):
-        digit.append(1.0/(10**d)) # this use divisin only to generate digit list:[1,0.1,0.01,0.001...]
+    quotient = [0 for i in range(n+1)] # [0,0,0,...0]
+    remainder = [0 for i in range(n+1)] # [0,0,0,...0]
+    digit = [1.0/(10**i) for i in range(n+1)] # this use divisin only to generate digit list:[1,0.1,0.01,0.001...]
 
-    if p<q:
-        quotient[0]=0
-        remainder[0]=p
     quotient[0],remainder[0]=basedivision(p,q)
     for i in range(n):
         if remainder[i]==0:
@@ -34,5 +31,6 @@ def division(p,q,n):
     return sum
 ### test methods
 print(basedivision(9,2)) #divide 9 by 2
+print(basedivision(2,9))
 print(division(2.1234,9.566,10)) # divide 2.1234 by 9.566 with keep ten decimal places
             
