@@ -26,11 +26,10 @@ def division(p,q,n):
             quotient[i+1],remainder[i+1]=basedivision(remainder[i]*10,q)
 
     sum=0
-    print(quotient)
     for i in range(n+1):
         sum=sum+quotient[i]*digit[i]
         if i!=0 and quotient[i]==0:
-            break
+            return sum
     if quotient[n]>=5: # rounding-off
         sum=sum+digit[n]
     return sum
