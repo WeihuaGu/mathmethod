@@ -2,6 +2,25 @@ def notlessthan(p,q):
     if p-q>=0:
         return True
     return False
+def popnumdot(q,dotindex):
+    qlist=list(str(q))
+    qlist.pop(dotindex)
+    qstr=''.join(qlist)
+    return int(qstr)
+def adddottonum(q,index):
+    qlist=list(str(q))
+    qlist.insert(index,'.')
+    qstr=''.join(qlist)
+    return float(qstr)
+
+
+def getdigits(num):
+    numstr = str(num)
+    numlen = len(numstr)
+    decimalpointindex = numstr.find('.')
+    if decimalpointindex > -1 :
+        return decimalpointindex,numlen-1-decimalpointindex
+    return numlen,0
 
 def basedivision(p,q):
     count = 0
@@ -13,7 +32,7 @@ def basedivision(p,q):
         return 0,p
     return count,p
 
-def division(p,q,n):
+def division(p,q,n=7):
     quotient = [0 for i in range(n+2)] # [0,0,0,...0]
     remainder = [0 for i in range(n+2)] # [0,0,0,...0]
     digit = [1.0/(10**i) for i in range(n+2)] # this use divisin only to generate digit list:[1,0.1,0.01,0.001...]
@@ -33,9 +52,36 @@ def division(p,q,n):
     if quotient[n]>=5: # rounding-off
         sum=sum+digit[n]
     return sum
-### test methods
-print(basedivision(9,2)) #divide 9 by 2
-print(division(2.1234,9.566,10)) # divide 2.1234 by 9.566 with keep ten decimal places
-print(division(9,2.4,5))
-print(division(3,9,10))
-            
+def basemultiplication(p,q):
+    sum =0
+    for i in range(q):
+        sum = p+sum
+    return sum
+def basepower(n,m):
+    product = 1
+    for i in range(m):
+        product=basemultiplication(product,n)
+    return product
+def multiplication(p,q):
+    interindex,decimal=getdigits(q)
+    if decimal == 0:
+        return basemultiplication(p,q)
+    numwithnodot=popnumdot(q,interindex)
+    multinum = basemultiplication(p,numwithnodot)
+    multinuminter,multinumdecimal=getdigits(multinum)
+    if multinumdecimal==0:
+        return adddottonum(multinum,len(str(multinum))-decimal)
+    else:
+        return adddottonum(popnumdot(multinum,multinuminter),multinuminter-decimal)
+
+def sprt(p,n=2):  # not start write
+    return 1
+
+def power(n,p:int,q:int=1):
+    if q==1:
+        return basepower(n,p)
+    else:
+        return multiplication(basepower(n,p),sprt(n,q))
+
+
+
