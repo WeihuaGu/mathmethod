@@ -57,12 +57,12 @@ def basemultiplication(p,q):
     for i in range(q):
         sum = p+sum
     return sum
-def basepower(n,m):
+def basepower(n,m,ac=5):
     product = 1
     for i in range(m):
-        product=basemultiplication(product,n)
+        product=round(multiplication(n,product),ac)
     return product
-def multiplication(p,q):
+def multiplication(p,q,ac=7):
     interindex,decimal=getdigits(q)
     if decimal == 0:
         return basemultiplication(p,q)
@@ -70,14 +70,29 @@ def multiplication(p,q):
     multinum = basemultiplication(p,numwithnodot)
     multinuminter,multinumdecimal=getdigits(multinum)
     if multinumdecimal==0:
-        return adddottonum(multinum,len(str(multinum))-decimal)
+        return round(adddottonum(multinum,len(str(multinum))-decimal),ac)
     else:
-        return adddottonum(popnumdot(multinum,multinuminter),multinuminter-decimal)
+        return round(adddottonum(popnumdot(multinum,multinuminter),multinuminter-decimal),ac)
 
-def sprt(p,n=2):  # not start write
-    return 1
+def sprt(p,nn=2,ac=0.1):  # not start write
+    n=0
+    m=p
+    current=round(division(n+m,2),4)
+    cal=basepower(current,nn)
+    while(abs(cal-p)>ac):
+        cal=round(basepower(current,nn),5)
+        print(n,m,current,cal,p)
+        if cal==p:
+            return current
+        if cal>p:
+            m=round(current,4)
+            current=round(division(n+m,2),4)
+        if cal<p:
+            n=round(current,4)
+            current=round(division(n+m,2),4)
+    return round(current,5)
 
-def power(n,p:int,q:int=1):
+def power(n,p,q=1):
     if q==1:
         return basepower(n,p)
     else:
