@@ -69,28 +69,32 @@ def multiplication(p,q,ac=7):
     numwithnodot=popnumdot(q,interindex)
     multinum = basemultiplication(p,numwithnodot)
     multinuminter,multinumdecimal=getdigits(multinum)
+    '''
     if multinumdecimal==0:
         return round(adddottonum(multinum,len(str(multinum))-decimal),ac)
     else:
         return round(adddottonum(popnumdot(multinum,multinuminter),multinuminter-decimal),ac)
+    '''
+    return division(multinum,power(10,decimal))
 
 def sprt(p,nn=2,ac=0.1):  # not start write
+    acc=5
     n=0
     m=p
-    current=round(division(n+m,2),4)
+    current=round(division(n+m,2),acc)
     cal=basepower(current,nn)
     while(abs(cal-p)>ac):
-        cal=round(basepower(current,nn),5)
+        cal=round(basepower(current,nn),acc)
         print(n,m,current,cal,p)
         if cal==p:
             return current
         if cal>p:
-            m=round(current,4)
+            m=round(current,acc)
             current=round(division(n+m,2),4)
         if cal<p:
-            n=round(current,4)
+            n=round(current,acc)
             current=round(division(n+m,2),4)
-    return round(current,5)
+    return round(current,acc)
 
 def power(n,p,q=1):
     if q==1:
